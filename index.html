@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belajar Bola Basket - PJOK</title>
+<style>
+  :root{--or:#ff7a00;--or2:#ff9d2e;--yl:#ffd400;--bl:#1e88ff;--gr:#22c55e;--rd:#ef4444;--dk:#1b1b2f;--bg:#fff8e8}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dk);line-height:1.6}
+  header{background:linear-gradient(135deg,var(--or),var(--yl));padding:40px 16px;text-align:center;border-bottom:6px solid var(--dk)}
+  header h1{font-size:clamp(28px,6vw,52px);font-weight:900;text-transform:uppercase;letter-spacing:1px}
+  header p{font-size:18px;font-weight:700;margin-top:6px}
+  .hero-ball{width:110px;height:110px;animation:bounce 1.2s infinite ease-in}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px) rotate(180deg)}}
+  .maker{display:inline-block;margin-top:14px;background:var(--dk);color:#fff;padding:8px 18px;border-radius:30px;font-size:14px;font-weight:700}
+  nav{position:sticky;top:0;z-index:10;background:var(--dk);display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:8px}
+  nav a{color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:8px 14px;border-radius:8px}
+  nav a:hover{background:var(--or)}
+  main{max-width:980px;margin:auto;padding:16px}
+  section{background:#fff;border:3px solid var(--dk);border-radius:16px;padding:20px;margin:22px 0;box-shadow:6px 6px 0 var(--or)}
+  h2{font-size:26px;color:var(--or);margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  h3{margin:12px 0 6px}
+  ul,ol{margin-left:22px}
+  li{margin:4px 0}
+  button{font-family:inherit;cursor:pointer;border:3px solid var(--dk);border-radius:10px;font-weight:800;padding:8px 14px;background:var(--yl);color:var(--dk);font-size:14px}
+  button:hover{background:var(--or2)}
+  .listen{background:var(--bl);color:#fff;font-size:13px}
+  .listen:hover{background:#0d6efd}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:12px}
+  .card{background:#fff3cf;border:3px solid var(--dk);border-radius:12px;padding:14px;text-align:center}
+  .card svg{width:70px;height:70px}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .tabs button.active{background:var(--or);color:#fff}
+  .panel{display:none;background:#fff3cf;border:3px solid var(--dk);border-radius:12px;padding:16px}
+  .panel.show{display:block}
+  .court-wrap{background:#e9a44c;border:4px solid var(--dk);border-radius:12px;overflow:hidden}
+  .court-wrap svg{width:100%;height:auto;display:block}
+  .hot{cursor:pointer}
+  .hot:hover{fill:rgba(255,212,0,.6)}
+  #courtInfo{margin-top:10px;background:var(--dk);color:#fff;padding:12px;border-radius:10px;min-height:52px;font-weight:700}
+  .table{width:100%;border-collapse:collapse;margin-top:8px}
+  .table th,.table td{border:2px solid var(--dk);padding:8px;text-align:left}
+  .table th{background:var(--or);color:#fff}
+  .opt{display:block;width:100%;text-align:left;margin:8px 0;background:#fff;font-size:16px}
+  .opt.ok{background:var(--gr);color:#fff}
+  .opt.no{background:var(--rd);color:#fff}
+  .bar{height:14px;background:#ddd;border:2px solid var(--dk);border-radius:10px;overflow:hidden;margin-bottom:12px}
+  .bar div{height:100%;width:0;background:var(--gr);transition:width .4s}
+  #fb{font-weight:800;margin:8px 0;min-height:26px}
+  .audiobar{position:fixed;right:10px;bottom:10px;z-index:20;background:var(--dk);color:#fff;border-radius:14px;padding:10px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;max-width:94vw;border:3px solid var(--yl)}
+  .audiobar button{padding:6px 10px;font-size:13px}
+  .audiobar label{font-size:12px}
+  footer{background:var(--dk);color:#fff;text-align:center;padding:26px 12px 90px;border-top:6px solid var(--or)}
+  footer b{color:var(--yl)}
+</style>
+</head>
+<body>
+
+<!-- Definisi gambar bola basket -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="ball" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="47" fill="#ff7a00" stroke="#1b1b2f" stroke-width="4"/>
+    <path d="M50 3V97M3 50H97" stroke="#1b1b2f" stroke-width="3.5" fill="none"/>
+    <path d="M17 17C35 33 35 67 17 83M83 17C65 33 65 67 83 83" stroke="#1b1b2f" stroke-width="3.5" fill="none"/>
+  </symbol>
+  <symbol id="hoop" viewBox="0 0 100 100">
+    <rect x="12" y="5" width="76" height="46" rx="4" fill="#fff" stroke="#1b1b2f" stroke-width="4"/>
+    <rect x="36" y="22" width="28" height="22" fill="none" stroke="#ef4444" stroke-width="3"/>
+    <ellipse cx="50" cy="56" rx="22" ry="6" fill="none" stroke="#ef4444" stroke-width="5"/>
+    <path d="M28 58L38 92M72 58L62 92M44 62L46 94M56 62L54 94M36 60L50 90L64 60" stroke="#1b1b2f" stroke-width="2" fill="none"/>
+  </symbol>
+</svg>
+
+<header>
+  <svg class="hero-ball"><use href="#ball"/></svg>
+  <h1>Belajar Bola Basket</h1>
+  <p>Materi PJOK – Interaktif, Bergambar, Berkuis &amp; Beraudio</p>
+  <button onclick="speakText('Selamat datang di pembelajaran bola basket. Dibuat oleh Muhammad Asad Fauzan Karunia. Pilih materi di menu, lalu tekan tombol dengarkan untuk mendengar penjelasannya.')">🔊 Sapaan Audio</button>
+  <div><span class="maker">Dibuat oleh: Muhammad Asad Fauzan Karunia – NIM 41182191240048</span></div>
+</header>
+
+<nav>
+  <a href="#pengertian">Pengertian</a>
+  <a href="#sejarah">Sejarah</a>
+  <a href="#lapangan">Lapangan</a>
+  <a href="#teknik">Teknik Dasar</a>
+  <a href="#aturan">Peraturan</a>
+  <a href="#kuis">Kuis</a>
+</nav>
+
+<main>
+
+<section id="pengertian">
+  <h2>🏀 Pengertian <button class="listen" onclick="readSection('pengertian')">🔊 Dengarkan</button></h2>
+  <div class="txt">
+  <p>Bola basket adalah olahraga permainan beregu. Setiap tim terdiri dari 5 pemain di lapangan. Tujuan permainan adalah memasukkan bola ke keranjang lawan sebanyak mungkin dan mempertahankan keranjang sendiri.</p>
+  <div class="grid">
+    <div class="card"><svg><use href="#ball"/></svg><h3>Bola</h3><p>Ukuran 7 untuk putra, keliling sekitar 75 sampai 78 cm.</p></div>
+    <div class="card"><svg><use href="#hoop"/></svg><h3>Ring</h3><p>Tinggi 3,05 meter, diameter 45 cm.</p></div>
+    <div class="card"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#1e88ff" stroke="#1b1b2f" stroke-width="4"/><text x="50" y="66" font-size="48" text-anchor="middle" fill="#fff" font-weight="900">5</text></svg><h3>Pemain</h3><p>5 pemain inti tiap tim di lapangan.</p></div>
+  </div>
+  <h3>Manfaat bermain bola basket</h3>
+  <ul><li>Melatih kebugaran jantung dan paru-paru</li><li>Melatih kelincahan dan koordinasi</li><li>Melatih kerja sama tim dan sportivitas</li></ul>
+  </div>
+</section>
+
+<section id="sejarah">
+  <h2>📜 Sejarah Singkat <button class="listen" onclick="readSection('sejarah')">🔊 Dengarkan</button></h2>
+  <div class="txt">
+  <p>Bola basket diciptakan oleh Dr. James Naismith, guru pendidikan jasmani di Springfield, Massachusetts, Amerika Serikat, pada tahun 1891. Awalnya permainan ini memakai keranjang buah persik sebagai target, dan bola sepak sebagai bolanya. Sekarang bola basket dimainkan di seluruh dunia, dan dipertandingkan di Olimpiade sejak tahun 1936.</p>
+  </div>
+</section>
+
+<section id="lapangan">
+  <h2>📐 Lapangan Interaktif <button class="listen" onclick="readSection('lapangan')">🔊 Dengarkan</button></h2>
+  <div class="txt"><p>Ukuran lapangan standar adalah 28 meter x 15 meter. <b>Klik bagian lapangan</b> di bawah untuk melihat penjelasan dan mendengarkan audionya.</p></div>
+  <div class="court-wrap">
+  <svg viewBox="0 0 940 500">
+    <rect width="940" height="500" fill="#e9a44c"/>
+    <g fill="none" stroke="#fff" stroke-width="5">
+      <rect x="20" y="20" width="900" height="460"/>
+      <line x1="470" y1="20" x2="470" y2="480"/>
+      <circle cx="470" cy="250" r="60"/>
+      <!-- area kiri -->
+      <rect x="20" y="170" width="190" height="160" fill="#ef4444" fill-opacity=".55"/>
+      <circle cx="210" cy="250" r="60"/>
+      <path d="M20 60H110A190 190 0 0 1 110 440H20"/>
+      <!-- area kanan -->
+      <rect x="730" y="170" width="190" height="160" fill="#ef4444" fill-opacity=".55"/>
+      <circle cx="730" cy="250" r="60"/>
+      <path d="M920 60H830A190 190 0 0 0 830 440H920"/>
+    </g>
+    <use href="#hoop" x="22" y="220" width="0" height="0"/>
+    <circle cx="62" cy="250" r="11" fill="none" stroke="#ff7a00" stroke-width="6"/>
+    <circle cx="878" cy="250" r="11" fill="none" stroke="#ff7a00" stroke-width="6"/>
+    <use href="#ball" x="440" y="220" width="60" height="60"/>
+    <!-- hotspots -->
+    <g fill="rgba(255,255,255,0)" stroke="#ffd400" stroke-width="3" stroke-dasharray="8 5">
+      <circle class="hot" cx="470" cy="250" r="60" onclick="info('Lingkaran tengah: tempat lompat bola (jump ball) di awal pertandingan. Jari-jari 1,8 meter.')"/>
+      <rect class="hot" x="20" y="170" width="190" height="160" onclick="info('Area bawah ring (area cat): pemain menyerang tidak boleh berada di sini lebih dari 3 detik.')"/>
+      <rect class="hot" x="730" y="170" width="190" height="160" onclick="info('Area bawah ring (area cat): pemain menyerang tidak boleh berada di sini lebih dari 3 detik.')"/>
+      <circle class="hot" cx="62" cy="250" r="22" onclick="info('Ring dan papan pantul: tinggi ring 3,05 meter dari lantai.')"/>
+      <circle class="hot" cx="878" cy="250" r="22" onclick="info('Ring dan papan pantul: tinggi ring 3,05 meter dari lantai.')"/>
+      <circle class="hot" cx="210" cy="250" r="50" onclick="info('Garis lemparan bebas: berjarak 4,6 meter dari papan. Tembakan bebas bernilai 1 poin.')"/>
+      <circle class="hot" cx="730" cy="250" r="50" onclick="info('Garis lemparan bebas: berjarak 4,6 meter dari papan. Tembakan bebas bernilai 1 poin.')"/>
+      <line class="hot" x1="470" y1="20" x2="470" y2="480" stroke-width="14" onclick="info('Garis tengah: membagi lapangan menjadi dua. Tim harus melewati garis ini dalam 8 detik.')"/>
+    </g>
+    <g fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
+      <text x="470" y="160">GARIS TENGAH</text>
+      <text x="115" y="255">AREA 3 DETIK</text>
+      <text x="825" y="255">AREA 3 DETIK</text>
+      <text x="300" y="75">Garis 3 poin</text>
+    </g>
+  </svg>
+  </div>
+  <div id="courtInfo">👆 Klik bagian lapangan untuk melihat informasi.</div>
+  <div class="grid">
+    <div class="card"><h3>1 poin</h3><p>Lemparan bebas</p></div>
+    <div class="card"><h3>2 poin</h3><p>Tembakan di dalam garis 3 poin</p></div>
+    <div class="card"><h3>3 poin</h3><p>Tembakan dari luar garis 3 poin</p></div>
+  </div>
+</section>
+
+<section id="teknik">
+  <h2>🤾 Teknik Dasar <button class="listen" onclick="readSection('teknik')">🔊 Dengarkan Panel Aktif</button></h2>
+  <div class="tabs" id="tabs">
+    <button class="active" data-t="t1">Mengoper</button>
+    <button data-t="t2">Menggiring</button>
+    <button data-t="t3">Menembak</button>
+    <button data-t="t4">Lay-up</button>
+  </div>
+  <div class="panel show" id="t1">
+    <div class="txt">
+    <h3>Mengoper (Passing)</h3>
+    <p>Mengoper adalah memberikan bola kepada teman satu tim.</p>
+    <ul><li><b>Chest pass:</b> operan dari depan dada, cepat dan lurus.</li><li><b>Bounce pass:</b> operan dipantulkan ke lantai sebelum diterima teman.</li><li><b>Overhead pass:</b> operan dari atas kepala untuk jarak jauh.</li></ul>
+    <p><b>Langkah:</b> 1) Pegang bola dengan dua tangan. 2) Satu kaki melangkah ke depan. 3) Dorong bola dengan meluruskan lengan. 4) Jari mengarah ke sasaran.</p>
+    </div>
+    <svg width="90" height="90"><use href="#ball"/></svg>
+  </div>
+  <div class="panel" id="t2">
+    <div class="txt">
+    <h3>Menggiring (Dribbling)</h3>
+    <p>Menggiring adalah membawa bola sambil memantulkannya ke lantai.</p>
+    <ul><li>Gunakan ujung jari, bukan telapak tangan.</li><li>Pandangan ke depan, bukan ke bola.</li><li>Lutut ditekuk, badan sedikit condong.</li><li>Lindungi bola dengan tangan yang lain.</li></ul>
+    <p><b>Larangan:</b> double dribble, yaitu menggiring dengan dua tangan bersamaan atau menggiring lagi setelah berhenti.</p>
+    </div>
+    <svg width="90" height="90"><use href="#ball"/></svg>
+  </div>
+  <div class="panel" id="t3">
+    <div class="txt">
+    <h3>Menembak (Shooting)</h3>
+    <p>Gunakan huruf B-E-E-F: Balance, Eyes, Elbow, Follow through.</p>
+    <ol><li><b>Balance:</b> kaki selebar bahu, seimbang.</li><li><b>Eyes:</b> mata melihat ring.</li><li><b>Elbow:</b> siku membentuk huruf L dan lurus ke ring.</li><li><b>Follow through:</b> lecutkan pergelangan tangan, jari menunjuk ke bawah.</li></ol>
+    </div>
+    <svg width="90" height="90"><use href="#hoop"/></svg>
+  </div>
+  <div class="panel" id="t4">
+    <div class="txt">
+    <h3>Lay-up</h3>
+    <p>Lay-up adalah tembakan dekat ring setelah menggiring bola, dengan dua langkah lalu melompat.</p>
+    <ol><li>Giring bola mendekati ring.</li><li>Tangkap bola, langkah pertama dengan kaki luar.</li><li>Langkah kedua, lalu lompat dengan tumpuan kaki berlawanan tangan tembak.</li><li>Lemparkan bola halus ke papan pantul menuju ring.</li></ol>
+    </div>
+    <svg width="90" height="90"><use href="#ball"/></svg>
+  </div>
+</section>
+
+<section id="aturan">
+  <h2>📋 Peraturan Penting <button class="listen" onclick="readSection('aturan')">🔊 Dengarkan</button></h2>
+  <div class="txt">
+  <table class="table">
+    <tr><th>Aturan</th><th>Penjelasan</th></tr>
+    <tr><td>Waktu</td><td>4 kuarter, masing-masing 10 menit (FIBA)</td></tr>
+    <tr><td>Traveling</td><td>Melangkah lebih dari dua langkah tanpa menggiring bola</td></tr>
+    <tr><td>Double dribble</td><td>Menggiring dengan dua tangan atau menggiring kembali setelah berhenti</td></tr>
+    <tr><td>3 detik</td><td>Penyerang tidak boleh berada di area cat lebih dari 3 detik</td></tr>
+    <tr><td>8 detik</td><td>Tim harus membawa bola melewati garis tengah dalam 8 detik</td></tr>
+    <tr><td>24 detik</td><td>Tim harus menembak dalam 24 detik</td></tr>
+    <tr><td>Foul</td><td>Pemain yang melakukan 5 pelanggaran pribadi harus keluar lapangan</td></tr>
+  </table>
+  </div>
+</section>
+
+<section id="kuis">
+  <h2>🏆 Kuis Bola Basket</h2>
+  <div class="bar"><div id="pbar"></div></div>
+  <div id="quiz"></div>
+  <div id="fb"></div>
+  <button id="nextBtn" style="display:none" onclick="nextQ()">Lanjut ➡</button>
+</section>
+
+</main>
+
+<footer>
+  <svg width="60" height="60"><use href="#ball"/></svg>
+  <p>Media Pembelajaran PJOK – Bola Basket</p>
+  <p>Dibuat oleh <b>Muhammad Asad Fauzan Karunia</b></p>
+  <p>NIM: <b>41182191240048</b></p>
+</footer>
+
+<!-- Kontrol audio -->
+<div class="audiobar">
+  <button onclick="pauseSpeak()">⏯ Jeda</button>
+  <button onclick="stopSpeak()">⏹ Stop</button>
+  <button id="musicBtn" onclick="toggleMusic()">🎵 Musik: Mati</button>
+  <button id="sfxBtn" onclick="toggleSfx()">🔔 Efek: Hidup</button>
+  <label>Kecepatan <input type="range" id="rate" min="0.6" max="1.4" step="0.1" value="0.95"></label>
+</div>
+
+<script>
+/* ===== AUDIO ===== */
+let sfxOn=true, paused=false;
+const synth=window.speechSynthesis;
+function speakText(t){
+  if(!synth){alert('Browser tidak mendukung audio suara.');return}
+  synth.cancel();
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang='id-ID';
+  u.rate=parseFloat(document.getElementById('rate').value);
+  synth.speak(u);
+}
+function stopSpeak(){synth&&synth.cancel();paused=false}
+function pauseSpeak(){if(!synth)return;if(paused){synth.resume()}else{synth.pause()}paused=!paused}
+function readSection(id){
+  let el;
+  if(id==='teknik'){el=document.querySelector('#teknik .panel.show .txt')}
+  else{el=document.querySelector('#'+id+' .txt')}
+  speakText(el.innerText);
+}
+function info(t){document.getElementById('courtInfo').textContent=t;beep(660,.1);speakText(t)}
+
+let ac;
+function ctx(){if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();return ac}
+function beep(f,d,type='sine',vol=.15){
+  if(!sfxOn)return;
+  const c=ctx(),o=c.createOscillator(),g=c.createGain();
+  o.type=type;o.frequency.value=f;g.gain.value=vol;
+  o.connect(g);g.connect(c.destination);o.start();
+  g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);
+  o.stop(c.currentTime+d);
+}
+function sfxOk(){beep(523,.15);setTimeout(()=>beep(784,.25),150)}
+function sfxNo(){beep(200,.35,'sawtooth',.12)}
+function toggleSfx(){sfxOn=!sfxOn;document.getElementById('sfxBtn').textContent='🔔 Efek: '+(sfxOn?'Hidup':'Mati')}
+
+/* musik latar sederhana */
+let musicTimer=null,step=0;
+const notes=[262,330,392,330,262,330,392,523,392,330,294,349,440,349,294,349];
+function toggleMusic(){
+  const b=document.getElementById('musicBtn');
+  if(musicTimer){clearInterval(musicTimer);musicTimer=null;b.textContent='🎵 Musik: Mati';return}
+  b.textContent='🎵 Musik: Hidup';
+  musicTimer=setInterval(()=>{
+    const c=ctx();
+    const o=c.createOscillator(),g=c.createGain();
+    o.type='triangle';o.frequency.value=notes[step%notes.length];
+    g.gain.value=.05;o.connect(g);g.connect(c.destination);o.start();
+    g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.3);o.stop(c.currentTime+.3);
+    if(step%4===0){beep(90,.2,'sine',.2)}
+    step++;
+  },300);
+}
+
+/* ===== TAB TEKNIK ===== */
+document.querySelectorAll('#tabs button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('#teknik .panel').forEach(x=>x.classList.remove('show'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.t).classList.add('show');
+    beep(500,.1);
+  };
+});
+
+/* ===== KUIS ===== */
+const Q=[
+ {q:'Berapa jumlah pemain inti satu tim bola basket di lapangan?',o:['4','5','6','7'],a:1},
+ {q:'Siapa penemu bola basket?',o:['Dr. James Naismith','Michael Jordan','Pierre de Coubertin','William Morgan'],a:0},
+ {q:'Berapa tinggi ring bola basket dari lantai?',o:['2,50 m','2,85 m','3,05 m','3,50 m'],a:2},
+ {q:'Tembakan dari luar garis 3 poin bernilai...',o:['1 poin','2 poin','3 poin','4 poin'],a:2},
+ {q:'Menggiring bola dengan dua tangan bersamaan disebut...',o:['Traveling','Double dribble','Foul','Jump ball'],a:1},
+ {q:'Berapa lama batas waktu serangan (shot clock) dalam bola basket?',o:['14 detik','20 detik','24 detik','30 detik'],a:2},
+ {q:'Operan yang dipantulkan ke lantai dahulu disebut...',o:['Chest pass','Bounce pass','Overhead pass','Lay-up'],a:1},
+ {q:'Pemain harus keluar lapangan setelah melakukan pelanggaran pribadi sebanyak...',o:['3 kali','4 kali','5 kali','6 kali'],a:2},
+ {q:'Ukuran lapangan bola basket standar adalah...',o:['20 x 10 m','25 x 12 m','28 x 15 m','30 x 18 m'],a:2},
+ {q:'Dalam teknik menembak B-E-E-F, huruf "E" yang pertama berarti...',o:['Energy','Eyes','Elbow','Easy'],a:1}
+];
+let qi=0,score=0,locked=false;
+function showQ(){
+  locked=false;
+  const q=Q[qi];
+  document.getElementById('pbar').style.width=(qi/Q.length*100)+'%';
+  document.getElementById('fb').textContent='';
+  document.getElementById('nextBtn').style.display='none';
+  let h='<h3>Soal '+(qi+1)+' dari '+Q.length+'</h3><p style="font-size:18px;font-weight:700">'+q.q+'</p>';
+  q.o.forEach((t,i)=>{h+='<button class="opt" onclick="pick('+i+',this)">'+String.fromCharCode(65+i)+'. '+t+'</button>'});
+  h+='<button class="listen" onclick="speakText(Q[qi].q)">🔊 Bacakan Soal</button>';
+  document.getElementById('quiz').innerHTML=h;
+}
+function pick(i,el){
+  if(locked)return;locked=true;
+  const q=Q[qi],btns=document.querySelectorAll('.opt');
+  if(i===q.a){el.classList.add('ok');score++;sfxOk();document.getElementById('fb').textContent='✅ Benar! Hebat!'}
+  else{el.classList.add('no');btns[q.a].classList.add('ok');sfxNo();document.getElementById('fb').textContent='❌ Kurang tepat. Jawaban benar: '+q.o[q.a]}
+  const n=document.getElementById('nextBtn');
+  n.style.display='inline-block';
+  n.textContent=qi===Q.length-1?'Lihat Hasil 🏁':'Lanjut ➡';
+}
+function nextQ(){qi++;qi<Q.length?showQ():result()}
+function result(){
+  document.getElementById('pbar').style.width='100%';
+  const s=Math.round(score/Q.length*100);
+  let m=s>=80?'Luar biasa! Kamu jago basket!':s>=60?'Bagus! Terus belajar ya.':'Ayo pelajari materi lagi dan coba kembali.';
+  document.getElementById('quiz').innerHTML='<div style="text-align:center"><svg width="100" height="100"><use href="#ball"/></svg><h2 style="justify-content:center">Skor: '+s+'</h2><p>Benar '+score+' dari '+Q.length+' soal</p><p style="font-weight:800">'+m+'</p><br><button onclick="restart()">🔄 Ulangi Kuis</button></div>';
+  document.getElementById('fb').textContent='';
+  document.getElementById('nextBtn').style.display='none';
+  sfxOk();speakText('Kuis selesai. Skor kamu '+s+'. '+m);
+}
+function restart(){qi=0;score=0;showQ()}
+showQ();
+</script>
+</body>
+</html>
